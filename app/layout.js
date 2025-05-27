@@ -4,8 +4,12 @@ import Logo from '@/app/_components/Logo';
 import '@/app/_styles/globals.css';
 
 export const metadata = {
-  title: 'The Wild Oasis',
-  description: 'Welcome to The Wild Oasis',
+  // title: 'The Wild Oasis',
+  title: {
+    template: '%s | The Wild Oasis',
+    default: 'The Wild Oasis',
+  },
+  description: 'Luxurious cabin hotel, located in the middle of nature, surronded by beautiful mountains and dark forests. Book now and get the best deals.',
 };
 
 export default function RootLayout({ children }) {
