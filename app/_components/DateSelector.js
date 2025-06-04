@@ -32,6 +32,20 @@ function DateSelector() {
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
+        styles={{
+          months: {
+            display: 'flex',
+            gap: '1rem',
+          },
+          month: {
+            margin: 0,
+          },
+        }}
+        // Atau gunakan className untuk custom styling
+        classNames={{
+          months: 'flex gap-4',
+          month: 'border-0',
+        }}
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
