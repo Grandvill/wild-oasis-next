@@ -15,7 +15,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
   // CHANGE
   const regularPrice = 23;
   const discount = 0;
-  const numNights = range.to ? Math.round((range.to - range.from) / (1000 * 60 * 60 * 24)) : 0;
+  const numNights = range.to && range.from ? Math.round((range.to - range.from) / (1000 * 60 * 60 * 24)) : 0;
   const cabinPrice = numNights * (regularPrice - discount);
 
   // SETTINGS
