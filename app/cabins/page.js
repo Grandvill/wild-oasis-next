@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import CabinList from '../_components/CabinList';
 import Spinner from '../_components/Spinner';
 import Filter from '../_components/Filter';
+import ReservationReminder from '../_components/ReservationReminder';
 
 // export const revalidate = 0;
 
@@ -26,6 +27,7 @@ export default function Page({ searchParams }) {
       {/* suspense berfungsi untuk menampilkan loading pada komponen tertentu, tidak semua halaman membutuhkan loading */}
       <Suspense fallback={<Spinner />} key={filter}>
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
