@@ -30,10 +30,106 @@
   }
 }
 
-/* For data picker */
-.rdp {
+/* Custom styling for react-day-picker */
+.date-picker-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.custom-day-picker {
   --rdp-cell-size: 32px !important;
   --rdp-accent-color: theme('colors.accent.500') !important;
   --rdp-background-color: theme('colors.accent.600') !important;
+  --rdp-outline: 2px solid theme('colors.accent.500') !important;
   margin: 0 !important;
+  font-size: 14px;
+}
+
+/* Ensure months are displayed side by side */
+.custom-day-picker .rdp-months {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 1rem !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
+.custom-day-picker .rdp-month {
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Style the calendar headers */
+.custom-day-picker .rdp-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-weight: 600;
+  color: theme('colors.primary.800');
+}
+
+/* Style the day cells */
+.custom-day-picker .rdp-day {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  border-radius: 4px;
+  border: none;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.custom-day-picker .rdp-day:hover:not(.rdp-day_disabled) {
+  background-color: theme('colors.accent.200') !important;
+  color: theme('colors.primary.800') !important;
+}
+
+.custom-day-picker .rdp-day_selected {
+  background-color: var(--rdp-accent-color) !important;
+  color: theme('colors.primary.800') !important;
+  font-weight: 600;
+}
+
+.custom-day-picker .rdp-day_range_middle {
+  background-color: theme('colors.accent.200') !important;
+  color: theme('colors.primary.800') !important;
+}
+
+.custom-day-picker .rdp-day_disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Style the dropdown selectors */
+.custom-day-picker .rdp-dropdown {
+  background-color: theme('colors.primary.100');
+  border: 1px solid theme('colors.primary.300');
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
+  font-size: 14px;
+  color: theme('colors.primary.800');
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-day-picker .rdp-months {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  .date-picker-container {
+    padding: 0.5rem;
+  }
+
+  .custom-day-picker {
+    --rdp-cell-size: 28px !important;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .custom-day-picker {
+    --rdp-cell-size: 24px !important;
+  }
 }

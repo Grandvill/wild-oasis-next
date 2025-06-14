@@ -14,59 +14,68 @@ function DateSelector({ settings, cabin, bookedDates }) {
 
   // CHANGE
   const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
+  const discount = 0;
+  const numNights = range.to ? Math.round((range.to - range.from) / (1000 * 60 * 60 * 24)) : 0;
+  const cabinPrice = numNights * (regularPrice - discount);
 
   // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
 
   return (
-    <div className="flex flex-col justify-between">
-      <DayPicker
-        className="pt-12 place-self-center"
-        mode="range"
-        onSelect={setRange}
-        selected={range}
-        min={minBookingLength + 1}
-        max={maxBookingLength}
-        fromMonth={new Date()}
-        fromDate={new Date()}
-        toYear={new Date().getFullYear() + 5}
-        captionLayout="dropdown"
-        numberOfMonths={2}
-      />
+    <div className="flex flex-col h-full border-r border-primary-800">
+      {/* Calendar Container */}
+      <div className="flex-1 flex items-center justify-center p-4 overflow-hidden">
+        <div className="date-picker-container">
+          <DayPicker
+            mode="range"
+            onSelect={setRange}
+            selected={range}
+            min={minBookingLength + 1}
+            max={maxBookingLength}
+            fromMonth={new Date()}
+            fromDate={new Date()}
+            toYear={new Date().getFullYear() + 5}
+            captionLayout="dropdown"
+            numberOfMonths={2}
+            disabled={bookedDates}
+            className="custom-day-picker"
+          />
+        </div>
+      </div>
 
-      <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
-        <div className="flex items-baseline gap-6">
-          <p className="flex gap-2 items-baseline">
+      {/* Price Summary */}
+      <div className="flex items-center justify-between px-6 py-4 bg-accent-500 text-primary-800 border-t border-primary-800 min-h-[72px]">
+        <div className="flex items-center gap-6 flex-wrap">
+          <div className="flex gap-2 items-baseline">
             {discount > 0 ? (
               <>
-                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="text-2xl font-semibold">${regularPrice - discount}</span>
                 <span className="line-through font-semibold text-primary-700">${regularPrice}</span>
               </>
             ) : (
-              <span className="text-2xl">${regularPrice}</span>
+              <span className="text-2xl font-semibold">${regularPrice}</span>
             )}
-            <span className="">/night</span>
-          </p>
-          {numNights ? (
+            <span className="text-sm">/night</span>
+          </div>
+
+          {range.from && range.to && numNights > 0 && (
             <>
-              <p className="bg-accent-600 px-3 py-2 text-2xl">
-                <span>&times;</span> <span>{numNights}</span>
-              </p>
-              <p>
-                <span className="text-lg font-bold uppercase">Total</span> <span className="text-2xl font-semibold">${cabinPrice}</span>
-              </p>
+              <div className="bg-accent-600 px-3 py-1 rounded text-lg font-semibold">
+                <span>×</span> <span>{numNights}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold uppercase text-primary-700">Total</span>
+                <span className="text-xl font-bold">${cabinPrice}</span>
+              </div>
             </>
-          ) : null}
+          )}
         </div>
 
-        {range.from || range.to ? (
-          <button className="border border-primary-800 py-2 px-4 text-sm font-semibold" onClick={resetRange}>
+        {(range.from || range.to) && (
+          <button className="border border-primary-800 py-2 px-4 text-sm font-semibold hover:bg-primary-100 transition-colors rounded" onClick={resetRange}>
             Clear
           </button>
-        ) : null}
+        )}
       </div>
     </div>
   );
