@@ -1,155 +1,72 @@
 'use client';
 
-import { isWithinInterval, differenceInDays } from 'date-fns';
-import { useState, useEffect } from 'react';
+import { isWithinInterval } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import { useReservation } from './ReservationContext';
 
 function isAlreadyBooked(range, datesArr) {
   return range.from && range.to && datesArr.some((date) => isWithinInterval(date, { start: range.from, end: range.to }));
 }
 
-function DateSelector({ settings, bookedDates, cabin }) {
-  const [range, setRange] = useState({ from: undefined, to: undefined });
+function DateSelector({ settings, cabin, bookedDates }) {
+  const { range, setRange, resetRange } = useReservation();
 
-  // These would normally come from props or calculations
-  const regularPrice = cabin?.regularPrice || 250;
-  const discount = cabin?.discount || 0;
-
-  // Calculate nights and price based on selected range
-  const [numNights, setNumNights] = useState(0);
-  const [cabinPrice, setCabinPrice] = useState(0);
-
-  // Update nights and price when range changes
-  useEffect(() => {
-    if (range.from && range.to) {
-      const nights = differenceInDays(range.to, range.from);
-      setNumNights(nights);
-      setCabinPrice(nights * (regularPrice - discount));
-    } else {
-      setNumNights(0);
-      setCabinPrice(0);
-    }
-  }, [range, regularPrice, discount]);
+  // CHANGE
+  const regularPrice = 23;
+  const discount = 23;
+  const numNights = 23;
+  const cabinPrice = 23;
 
   // SETTINGS
-  const { minBookingLength = 1, maxBookingLength = 30 } = settings || {};
-
-  // Function to reset the date range
-  const resetRange = () => {
-    setRange({ from: undefined, to: undefined });
-  };
-
-  // Convert booked dates from strings to Date objects if needed
-  const disabledDates = bookedDates?.map((date) => (typeof date === 'string' ? new Date(date) : date)) || [];
-
-  // Custom navigation buttons
-  const CustomNavigation = ({ onPreviousClick, onNextClick }) => {
-    return (
-      <div className="flex justify-center space-x-4 text-[#d4a762]">
-        <button onClick={onPreviousClick} className="text-xl hover:text-[#c69c58]">
-          ←
-        </button>
-        <button onClick={onNextClick} className="text-xl hover:text-[#c69c58]">
-          →
-        </button>
-      </div>
-    );
-  };
+  const { minBookingLength, maxBookingLength } = settings;
 
   return (
-    <div className="flex flex-col justify-between bg-[#1a1f25] text-white w-full ">
-      <div className="p-6 ">
-        {/* Custom styling for react-day-picker */}
-        <style jsx global>{`
-          .rdp {
-            --rdp-cell-size: 40px;
-            --rdp-accent-color: #d4a762;
-            --rdp-background-color: #2c3440;
-            margin: 0;
-          }
-          .rdp-months {
-            display: flex;
-            justify-content: space-between;
-          }
-          .rdp-month {
-            background-color: transparent;
-            margin: 0;
-          }
-          .rdp-caption {
-            display: none; /* Hide default caption since we're creating our own */
-          }
-          .rdp-cell {
-            padding: 0;
-          }
-          .rdp-head_cell {
-            font-weight: 400;
-            color: #9ca3af;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-          }
-          .rdp-day {
-            width: 40px;
-            height: 40px;
-            border-radius: 0;
-            transition: all 0.2s ease;
-          }
-          .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected) {
-            background-color: #2c3440;
-          }
-          .rdp-day_selected {
-            background-color: #d4a762;
-            color: #1a1f25;
-            font-weight: bold;
-          }
-          .rdp-day_selected:hover {
-            background-color: #c69c58;
-          }
-          .rdp-day_range_middle {
-            background-color: #8b6d3f;
-            color: white;
-          }
-        `}</style>
+    <div className="flex flex-col justify-between">
+      <DayPicker
+        className="pt-12 place-self-center"
+        mode="range"
+        onSelect={setRange}
+        selected={range}
+        min={minBookingLength + 1}
+        max={maxBookingLength}
+        fromMonth={new Date()}
+        fromDate={new Date()}
+        toYear={new Date().getFullYear() + 5}
+        captionLayout="dropdown"
+        numberOfMonths={2}
+      />
 
-        <DayPicker
-          mode="range"
-          onSelect={(range) => setRange(range || { from: undefined, to: undefined })}
-          selected={range}
-          disabled={disabledDates}
-          fromMonth={new Date()}
-          fromDate={new Date()}
-          toYear={new Date().getFullYear() + 5}
-          numberOfMonths={2}
-          modifiers={{
-            booked: disabledDates,
-          }}
-          modifiersStyles={{
-            booked: {
-              backgroundColor: '#2c3440',
-              color: '#6c7a89',
-              textDecoration: 'line-through',
-            },
-          }}
-          showOutsideDays={false}
-          captionLayout="buttons"
-          hideHead={false}
-        />
-      </div>
-
-      <div className="bg-[#d4a762] text-[#1a1f25] p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="font-bold text-xl">
-              ${regularPrice} <span className="text-sm font-normal">/night</span>
-            </div>
-          </div>
-
-          {(range.from || range.to) && (
-            <button className="border border-[#1a1f25] py-1 px-6 text-sm font-medium hover:bg-[#c69c58] transition-colors" onClick={resetRange}>
-              Clear
-            </button>
-          )}
+      <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
+        <div className="flex items-baseline gap-6">
+          <p className="flex gap-2 items-baseline">
+            {discount > 0 ? (
+              <>
+                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="line-through font-semibold text-primary-700">${regularPrice}</span>
+              </>
+            ) : (
+              <span className="text-2xl">${regularPrice}</span>
+            )}
+            <span className="">/night</span>
+          </p>
+          {numNights ? (
+            <>
+              <p className="bg-accent-600 px-3 py-2 text-2xl">
+                <span>&times;</span> <span>{numNights}</span>
+              </p>
+              <p>
+                <span className="text-lg font-bold uppercase">Total</span> <span className="text-2xl font-semibold">${cabinPrice}</span>
+              </p>
+            </>
+          ) : null}
         </div>
+
+        {range.from || range.to ? (
+          <button className="border border-primary-800 py-2 px-4 text-sm font-semibold" onClick={resetRange}>
+            Clear
+          </button>
+        ) : null}
       </div>
     </div>
   );
