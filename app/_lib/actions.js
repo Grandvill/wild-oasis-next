@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { auth, signIn, signOut } from './Auth';
 import { supabase } from './supabase';
 
@@ -22,6 +23,9 @@ export async function updateGuest(formData) {
   const { data, error } = await supabase.from('guests').update(updateData).eq('id', session.user.guestId);
 
   if (error) throw new Error('Guest could not be updated');
+
+  // revalidate berfungsi untuk memperbarui cache halaman ini tanpa perlu refresh browser
+  revalidatePath('/account/profile');
 }
 
 export async function signInAction() {
