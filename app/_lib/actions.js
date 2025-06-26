@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth, signIn, signOut } from './Auth';
 import { supabase } from './supabase';
+import { getBookings } from './data-service';
 
 export async function updateGuest(formData) {
   const session = await auth();
@@ -26,6 +27,22 @@ export async function updateGuest(formData) {
 
   // revalidate berfungsi untuk memperbarui cache halaman ini tanpa perlu refresh browser
   revalidatePath('/account/profile');
+}
+
+export async function deleteReservation(bookingId) {
+  const session = await auth();
+  if (!session) throw new Error('You must be logged in to delete a reservation.');
+
+  const guestBookings = await getBookings(session.user.guestId);
+  if (!guestBookings.includes(bookingId)) throw new Error('You are not allowed to delete this booking.');
+
+  const { error } = await supabase.from('bookings').delete().eq('id', bookingId);
+
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not be deleted');
+  }
+  revalidatePath('/account/reservations');
 }
 
 export async function signInAction() {
