@@ -5,6 +5,7 @@ import { auth, signIn, signOut } from './Auth';
 import { supabase } from './supabase';
 import { getBookings } from './data-service';
 
+// action.js : file ini digunakan untuk logic yang berkaitan dengan session, validasi user, dan revalidate cache setelah operasi data
 export async function updateGuest(formData) {
   const session = await auth();
   if (!session) throw new Error('You must be logged in to update your guest profile.');
@@ -34,8 +35,9 @@ export async function deleteReservation(bookingId) {
   if (!session) throw new Error('You must be logged in to delete a reservation.');
 
   const guestBookings = await getBookings(session.user.guestId);
-  if (!guestBookings.includes(bookingId)) throw new Error('You are not allowed to delete this booking.');
+  const guestBookingsIds = guestBookings.map((booking) => booking.id);
 
+  if (!guestBookingsIds.includes(bookingId)) throw new Error('You are not allowed to delete this booking.');
   const { error } = await supabase.from('bookings').delete().eq('id', bookingId);
 
   if (error) {
