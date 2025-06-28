@@ -5,7 +5,7 @@ import { useReservation } from './ReservationContext';
 import { createBooking } from '../_lib/actions';
 
 function ReservationForm({ cabin, user }) {
-  const { range } = useReservation();
+  const { range, resetRange } = useReservation();
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
   const startDate = range.from;
@@ -50,7 +50,14 @@ function ReservationForm({ cabin, user }) {
       )}
 
       {/* Form */}
-      <form action={createBookingWithData} className="bg-primary-900 flex-1 py-8 px-6 text-lg flex gap-6 flex-col">
+      <form
+        // action={createBookingWithData}
+        action={async (formData) => {
+          createBookingWithData(formData);
+          resetRange();
+        }}
+        className="bg-primary-900 flex-1 py-8 px-6 text-lg flex gap-6 flex-col"
+      >
         <div className="space-y-2">
           <label htmlFor="numGuests" className="block text-primary-200 font-medium">
             How many guests?
