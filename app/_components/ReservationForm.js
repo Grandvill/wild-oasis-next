@@ -3,6 +3,7 @@
 import { differenceInDays } from 'date-fns';
 import { useReservation } from './ReservationContext';
 import { createBooking } from '../_lib/actions';
+import SubmitButton from './SubmitButton';
 
 function ReservationForm({ cabin, user }) {
   const { range, resetRange } = useReservation();
@@ -93,14 +94,13 @@ function ReservationForm({ cabin, user }) {
         </div>
 
         <div className="flex justify-end items-center gap-6 mt-auto pt-4">
-          {!range.from || !range.to ? <p className="text-primary-400 text-base">Start by selecting dates</p> : null}
-
-          <button
+          {!(startDate && endDate) ? <p className="text-primary-400 text-base">Start by selecting dates</p> : <SubmitButton pendingLabel="Reserving...">Reserve now</SubmitButton>}
+          {/* <button
             className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 rounded shadow-md"
             disabled={!range.from || !range.to}
           >
             Reserve now
-          </button>
+          </button> */}
         </div>
       </form>
     </div>
