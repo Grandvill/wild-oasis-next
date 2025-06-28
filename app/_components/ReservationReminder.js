@@ -5,9 +5,11 @@ import { format } from 'date-fns';
 import { useReservation } from './ReservationContext';
 
 function ReservationReminder() {
-  const { range, resetRange } = useReservation();
+  const { range, resetRange, reservationConfirmed } = useReservation();
 
-  // Check if range exists and both from and to are valid dates
+  // Hanya tampil jika sudah dikonfirmasi
+  if (!reservationConfirmed) return null;
+
   if (!range || !range.from || !range.to) return null;
 
   const fromDate = new Date(range.from);

@@ -8,9 +8,14 @@ const initialState = { from: null, to: null };
 
 function ReservationProvider({ children }) {
   const [range, setRange] = useState(initialState);
-  const resetRange = () => setRange(initialState);
+  const [reservationConfirmed, setReservationConfirmed] = useState(false);
 
-  return <ReservationContext.Provider value={{ range, setRange, resetRange }}>{children}</ReservationContext.Provider>;
+  const resetRange = () => {
+    setRange(initialState);
+    setReservationConfirmed(false); // Reset konfirmasi saat range direset
+  };
+
+  return <ReservationContext.Provider value={{ range, setRange, resetRange, reservationConfirmed, setReservationConfirmed }}>{children}</ReservationContext.Provider>;
 }
 
 function useReservation() {
