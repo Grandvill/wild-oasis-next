@@ -6,38 +6,44 @@ import { createBooking } from '../_lib/actions';
 import SubmitButton from './SubmitButton';
 
 function ReservationForm({ cabin, user }) {
-  const { range, resetRange } = useReservation();
+  const { range, resetRange, confirmReservation } = useReservation();
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
-  const startDate = range.from;
-  const endDate = range.to;
+  // Pengecekan apakah range.from dan range.to ada
+  const startDate = range.from ? new Date(range.from.setHours(12, 0, 0, 0)) : undefined;
+  const endDate = range.to ? new Date(range.to.setHours(12, 0, 0, 0)) : undefined;
 
-  const numNights = differenceInDays(endDate, startDate);
-  const cabinPrice = numNights * (regularPrice - discount);
+  // Hanya hitung numNights dan cabinPrice jika startDate dan endDate ada
+  const numNights = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
+  const cabinPrice = startDate && endDate ? numNights * (regularPrice - discount) : 0;
 
-  const bookingData = {
-    startDate,
-    endDate,
-    numNights,
-    cabinPrice,
-    cabinId: id,
-  };
+  const bookingData =
+    startDate && endDate
+      ? {
+          startDate: startDate.toISOString().split('T')[0], // "2025-07-01"
+          endDate: endDate.toISOString().split('T')[0], // "2025-07-03"
+          numNights,
+          cabinPrice,
+          cabinId: id,
+        }
+      : {
+          startDate: '',
+          endDate: '',
+          numNights: 0,
+          cabinPrice: 0,
+          cabinId: id,
+        };
 
   const createBookingWithData = createBooking.bind(null, bookingData);
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
       <div className="bg-primary-800 text-primary-300 px-6 py-3 flex justify-between items-center border-b border-primary-700">
         <p className="font-medium">Logged in as</p>
-
-        {/* Uncomment when user data is available */}
-        {
-          <div className="flex gap-4 items-center">
-            <img referrerPolicy="no-referrer" className="h-8 rounded-full" src={user.image || '/placeholder.svg'} alt={user.name} />
-            <p>{user.name}</p>
-          </div>
-        }
+        <div className="flex gap-4 items-center">
+          <img referrerPolicy="no-referrer" className="h-8 rounded-full" src={user.image || '/placeholder.svg'} alt={user.name} />
+          <p>{user.name}</p>
+        </div>
       </div>
 
       {/* Selected Dates Display */}
@@ -52,10 +58,12 @@ function ReservationForm({ cabin, user }) {
 
       {/* Form */}
       <form
-        // action={createBookingWithData}
         action={async (formData) => {
-          createBookingWithData(formData);
-          resetRange();
+          if (startDate && endDate) {
+            await createBookingWithData(formData);
+            confirmReservation(); // Aktifkan reminder
+            resetRange(); // Reset setelah konfirmasi
+          }
         }}
         className="bg-primary-900 flex-1 py-8 px-6 text-lg flex gap-6 flex-col"
       >
@@ -94,13 +102,7 @@ function ReservationForm({ cabin, user }) {
         </div>
 
         <div className="flex justify-end items-center gap-6 mt-auto pt-4">
-          {!(startDate && endDate) ? <p className="text-primary-400 text-base">Start by selecting dates</p> : <SubmitButton pendingLabel="Reserving...">Reserve now</SubmitButton>}
-          {/* <button
-            className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 rounded shadow-md"
-            disabled={!range.from || !range.to}
-          >
-            Reserve now
-          </button> */}
+          {!(range.from && range.to) ? <p className="text-primary-400 text-base">Start by selecting dates</p> : <SubmitButton pendingLabel="Reserving...">Reserve now</SubmitButton>}
         </div>
       </form>
     </div>
