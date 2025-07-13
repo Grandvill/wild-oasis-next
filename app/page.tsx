@@ -31,23 +31,6 @@ export default function Page() {
             <span className="relative z-10">Explore luxury cabins</span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Link>
-
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-white border-2 border-white/30 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 hover:border-white/50 transition-all duration-300 w-full sm:w-auto max-w-[280px]"
-          >
-            Learn more
-          </Link>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block">
-          <div className="flex flex-col items-center text-white/70 animate-bounce">
-            <span className="text-sm mb-2 font-light">Scroll to explore</span>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
         </div>
       </div>
     </main>
