@@ -1,17 +1,42 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import bg from '@/public/home.jpg';
+
 export default function Page() {
   return (
-    <main className="mt-24">
-      <Image src={bg} fill placeholder="blur" quality={80} className="object-cover object-top" alt="Mountains and forests with two cabins" />
-
-      <div className="relative z-10 text-center">
-        <h1 className="text-8xl text-primary-50 mb-10 tracking-tight font-normal">Welcome to paradise.</h1>
-        <Link href="/cabins" className="bg-accent-500 px-8 py-6 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all">
-          Explore luxury cabins
-        </Link>
+    <main className="fixed inset-0 w-screen h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image src={bg || '/placeholder.svg'} fill placeholder="blur" quality={80} className="object-cover object-center" alt="Mountains and forests with two cabins" priority sizes="100vw" />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        {/* Main Heading */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white mb-6 sm:mb-8 lg:mb-12 tracking-tight leading-tight">
+          Welcome to <span className="block sm:inline bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent font-normal">paradise.</span>
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 mb-8 sm:mb-10 lg:mb-12 max-w-2xl mx-auto font-light leading-relaxed">Discover luxury cabins nestled in nature's most breathtaking locations</p>
+
+        {/* CTA Button */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Link
+            href="/cabins"
+            className="group relative inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-5 text-base sm:text-lg font-semibold text-gray-900 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 ease-out hover:from-amber-300 hover:to-yellow-400 min-w-[200px] sm:min-w-[240px]"
+          >
+            <span className="relative z-10">Explore luxury cabins</span>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-1/4 left-4 w-2 h-16 bg-gradient-to-b from-amber-400 to-transparent opacity-60 hidden lg:block" />
+      <div className="absolute bottom-1/4 right-4 w-2 h-16 bg-gradient-to-t from-amber-400 to-transparent opacity-60 hidden lg:block" />
     </main>
   );
 }
