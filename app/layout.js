@@ -10,27 +10,22 @@ const josefin = Josefin_Sans({
 });
 
 export const metadata = {
-  // title: 'The Wild Oasis',
   title: {
     template: '%s | The Wild Oasis',
     default: 'The Wild Oasis',
   },
-  description: 'Luxurious cabin hotel, located in the middle of nature, surronded by beautiful mountains and dark forests. Book now and get the best deals.',
+  description: 'Luxurious cabin hotel, located in the middle of nature, surrounded by beautiful mountains and dark forests. Book now and get the best deals.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col relative`}>
+      <body className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen relative`}>
         <Header />
-        <div className="flex-1 px-8 py-12 grid ">
-          <main className="max-w-7xl mx-auto w-full">
-            <ReservationProvider>
-              {children}
-              <ReservationReminder />
-            </ReservationProvider>
-          </main>
-        </div>
+        <ReservationProvider>
+          {children}
+          <ReservationReminder />
+        </ReservationProvider>
       </body>
     </html>
   );
