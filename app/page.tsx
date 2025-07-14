@@ -1,21 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import bg from '@/public/home.jpg';
-
 export default function Page() {
   return (
-    <main className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 w-full h-full">
-        <Image src={bg || '/placeholder.svg'} fill placeholder="blur" quality={80} className="object-cover object-center" alt="Mountains and forests with two cabins" priority sizes="100vw" />
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/30" />
-      </div>
+    <main className="w-full flex items-center justify-center overflow-hidden mt-24 ">
+      <Image src={bg} fill placeholder="blur" quality={80} className="object-cover object-top" alt="Mountains and forests with two cabins" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto pt-20 sm:pt-24">
+      <div className="relative z-10 text-center bottom-6 px-2 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         {/* Main Heading */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white mb-4 sm:mb-6 lg:mb-8 tracking-tight leading-tight">
+        <h1 className="text-7xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl font-light text-white mb-4 sm:mb-6 lg:mb-8 tracking-tight leading-snug">
           Welcome to <span className="block sm:inline bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent font-normal">paradise.</span>
         </h1>
 
