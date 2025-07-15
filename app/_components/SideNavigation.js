@@ -35,8 +35,8 @@ function SideNavigation() {
 
   return (
     <>
-      {/* Hamburger Button for Mobile */}
-      <button onClick={toggleMenu} className="md:hidden fixed top-6 right-6 z-50 text-white focus:outline-none">
+      {/* Hamburger Button for Mobile Side Navigation */}
+      <button onClick={toggleMenu} className="md:hidden fixed top-32 right-6 z-50 text-white focus:outline-none">
         {isOpen ? <X size={32} /> : <Menu size={32} />}
       </button>
 
