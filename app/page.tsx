@@ -14,7 +14,7 @@ export default function Page() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 lg:mb-10 max-w-2xl mx-auto font-light leading-relaxed">Discover luxury cabins nestled in nature's most breathtaking locations</p>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 lg:mb-10 max-w-2xl mx-auto font-light leading-relaxed">Discover luxury cabins nestled in nature&apos;s most breathtaking locations</p>
 
         {/* CTA Button */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">

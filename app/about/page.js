@@ -21,14 +21,14 @@ export default async function Page() {
 
           <div className="space-y-4 sm:space-y-6">
             <p className="text-sm sm:text-base md:text-lg">
-              Where nature's beauty and comfortable living blend seamlessly. Hidden away in the heart of the Italian Dolomites, this is your paradise away from home. But it's not just about the luxury cabins. It's about the experience of
-              reconnecting with nature and enjoying simple pleasures with family.
+              Where nature&apos;s beauty and comfortable living blend seamlessly. Hidden away in the heart of the Italian Dolomites, this is your paradise away from home. But it&apos;s not just about the luxury cabins. It&apos;s about the
+              experience of reconnecting with nature and enjoying simple pleasures with family.
             </p>
             <p className="text-sm sm:text-base md:text-lg">
-              Our {cabins.length} luxury cabins provide a cozy base, but the real freedom and peace you'll find in the surrounding mountains. Wander through lush forests, breathe in the fresh air, and watch the stars twinkle above from the
-              warmth of a campfire or your hot tub.
+              Our {cabins.length} luxury cabins provide a cozy base, but the real freedom and peace you&apos;ll find in the surrounding mountains. Wander through lush forests, breathe in the fresh air, and watch the stars twinkle above from
+              the warmth of a campfire or your hot tub.
             </p>
-            <p className="text-sm sm:text-base md:text-lg">This is where memorable moments are made, surrounded by nature's splendor. It's a place to slow down, relax, and feel the joy of being together in a beautiful setting.</p>
+            <p className="text-sm sm:text-base md:text-lg">This is where memorable moments are made, surrounded by nature&apos;s splendor. It&apos;s a place to slow down, relax, and feel the joy of being together in a beautiful setting.</p>
           </div>
         </div>
 
@@ -47,8 +47,8 @@ export default async function Page() {
               warm, welcoming environment.
             </p>
             <p className="text-sm sm:text-base md:text-lg">
-              Over the years, we've maintained the essence of The Wild Oasis, blending the timeless beauty of the mountains with the personal touch only a family business can offer. Here, you're not just a guest; you're part of our extended
-              family. So join us at The Wild Oasis soon, where tradition meets tranquility, and every visit is like coming home.
+              Over the years, we&apos;ve maintained the essence of The Wild Oasis, blending the timeless beauty of the mountains with the personal touch only a family business can offer. Here, you&apos;re not just a guest; you&apos;re part
+              of our extended family. So join us at The Wild Oasis soon, where tradition meets tranquility, and every visit is like coming home.
             </p>
 
             <div>
