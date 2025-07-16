@@ -6,7 +6,7 @@ function Header({ session }) {
     <header className="border-b border-primary-900 px-8 py-5">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Logo />
-        <Navigation session={session} /> {/* Teruskan sesi ke Navigation */}
+        <Navigation session={session} /> {/* Teruskan sesi dan auth ke Navigation */}
       </div>
     </header>
   );

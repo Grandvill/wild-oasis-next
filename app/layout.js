@@ -3,7 +3,7 @@ import { Josefin_Sans } from 'next/font/google';
 import '@/app/_styles/globals.css';
 import { ReservationProvider } from './_components/ReservationContext';
 import ReservationReminder from './_components/ReservationReminder';
-import { supabase } from './_lib/supabase';
+import { auth } from './_lib/auth';
 
 const josefin = Josefin_Sans({
   subsets: ['latin'],
@@ -19,10 +19,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // Ambil sesi di sisi server
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // Ambil sesi menggunakan auth() dari NextAuth
+  const session = await auth();
 
   return (
     <html>
