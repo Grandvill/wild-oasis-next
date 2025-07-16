@@ -12,13 +12,14 @@ function ReservationList({ bookings }) {
   });
 
   async function handleDelete(bookingId) {
+    optimisticDelete(bookingId);
     await deleteReservation(bookingId);
   }
 
   return (
     <ul className="space-y-6">
       {optimisticBookings.map((booking) => (
-        <ReservationCard booking={booking} key={booking.id} onDelete={optimisticDelete} />
+        <ReservationCard booking={booking} key={booking.id} onDelete={handleDelete} />
       ))}
     </ul>
   );
